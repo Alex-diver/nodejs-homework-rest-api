@@ -4,13 +4,13 @@ const { HttpError, ctrlWrapper } = require("../helpers");
 const { updateStatusContactSchema } = require("../schemas/contacts");
 
 const listContacts = async (req, res) => {
-  const result = await Contact.listContacts();
+  const result = await Contact.find().exec();
   res.json(result);
 };
 
 const getContactById = async (req, res) => {
   const { contactId } = req.params;
-  const result = await Contact.getContactById(contactId);
+  const result = await Contact.findById(contactId).exec();
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -18,13 +18,13 @@ const getContactById = async (req, res) => {
 };
 
 const addContact = async (req, res) => {
-  const result = await Contact.addContact(req.body);
+  const result = await Contact.create(req.body);
   res.status(201).json(result);
 };
 
 const removeContact = async (req, res) => {
   const { contactId } = req.params;
-  const result = await Contact.removeContact(contactId);
+  const result = await Contact.findByIdAndRemove(contactId);
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -32,7 +32,9 @@ const removeContact = async (req, res) => {
 };
 const updateContact = async (req, res) => {
   const { contactId } = req.params;
-  const result = await Contact.updateContact(contactId, req.body);
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
   if (!result) {
     throw HttpError(404, "Not found");
   }
