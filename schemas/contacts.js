@@ -7,11 +7,19 @@ const addSchema = Joi.object({
   favorite: Joi.boolean(),
 });
 
+const schemaUpdateContact = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string(),
+  favorite: Joi.boolean(),
+}).min(1);
+
 const updateStatusContactSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
 module.exports = {
   addSchema,
+  schemaUpdateContact,
   updateStatusContactSchema,
 };
