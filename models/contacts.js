@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const handleMongooseError = require("../helpers/handleMongooseError");
+
 const schemaContacts = new mongoose.Schema({
   name: {
     type: String,
@@ -21,4 +23,8 @@ const schemaContacts = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("contacts", schemaContacts);
+schemaContacts.post("save", handleMongooseError);
+
+const Contact = mongoose.model("contacts", schemaContacts);
+
+module.exports = Contact;

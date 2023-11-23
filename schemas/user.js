@@ -19,4 +19,4 @@ const schemas = {
   updateSubscription,
 };
 
-module.exports = schemas;
+module.exports = { schemas };
